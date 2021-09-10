@@ -3,7 +3,9 @@ Test Technical Interview
 
 STEP:
 sequelize db:create
+
 sequelize db:migrate
+
 sequelize db:seed:all
 
 cd client2
