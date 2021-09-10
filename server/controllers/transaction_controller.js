@@ -2,11 +2,32 @@ const { response } = require("express");
 const {Order, Transaction, Food, User} = require("../models");
 
 class TransactionController{
+    static updateStatus(req, res){
+        const {id} = req.params
+        console.log(id);
+        Transaction.findByPk(id)
+        .then(data =>{
+            console.log("DADADADA",data);
+            if(data){
+                if(data.status === "incomplete"){
+                    return Transaction.update({status:"completed"}, {where:{id}})
+                }
+            }else{
+                res.status(404).json("NotFound")
+            }
+        })
+        .then(data =>{
+            res.status(200).json(data)
+        })
+        .catch(err =>{
+            res.status(500).json(err);
+        })
+    }
     static getAllTransaction(req, res) {
         const {role} = req.user;
         if(role === 'customer'){
             const {id} = req.user
-            Transaction.findAll({where:{UserId: id,}, include:[{model: Order}, {model: User}], order: [['updatedAt', 'DESC']]})
+            Transaction.findAll({where:{UserId: id}, include:[{model: Order}, {model: User}], order: [['updatedAt', 'DESC']]})
             .then(data =>{
                 res.status(200).json(data)
             })

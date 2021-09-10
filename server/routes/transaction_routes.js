@@ -5,6 +5,7 @@ const router = require('express').Router();
 
 router.use(authentication);
 router.post('/', TransactionController.createTransaction);
+router.patch('/:id', TransactionController.updateStatus);
 router.get('/', TransactionController.getAllTransaction);
 
 

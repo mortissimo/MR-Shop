@@ -12,11 +12,27 @@ export default function UserTrasaction() {
     const [orderModal, setOrderModal] = useState(false)
     const [transactions, setTransactions] = useState([])
     const [transactionDetail, setTransactionDetail] = useState('')
+    
+    const handleComplete = async(e, id) =>{
+        e.stopPropagation();
+        e.preventDefault();
+        await axios({
+            method:"PATCH",
+            url:`/transactions/${id}`,
+            headers:{
+                access_token: localStorage.getItem('token')
+            }
+        })
+        .then(async () =>{
+           await  getAllTransaction();
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+    }
 
     const handleShowOrder = async (e, data) =>{
-        
         e.preventDefault();
-       
         if(orderModal){
             setOrderModal(false);
         }else{
@@ -73,7 +89,7 @@ export default function UserTrasaction() {
                 <span class="px-2 w-max inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                     {data.status}
                 </span>
-                <button class='flex py-1 px-2 text-white w-max items-center bg-green-500 rounded-md '>Upload Image</button>
+                <button class='flex py-1 px-2 text-white w-max items-center bg-green-500 rounded-md' onClick={(e) => handleComplete(e, data.id)}>Complete</button>
             </div>
         </div>
             )

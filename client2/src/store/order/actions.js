@@ -23,19 +23,19 @@ export const deleteOrder = (data) =>{
 
 export const fetchOrdered = (data) =>{
     console.log("ENTERRINGNG",data);
-    return (dispatch) =>{
+    return async (dispatch) =>{
         try{
             dispatch({type: actionType.SET_LOADING})
-            axios({
+            await axios({
                 method:"GET",
                 url:`/orders/${data}`,
                 headers:{
                     access_token: localStorage.getItem('token')
                 },
             })
-            .then(({data}) =>{
+            .then(async ({data}) =>{
                 console.log(data);
-                dispatch(setDetail(data));
+                await dispatch(setDetail(data));
             }) 
             .finally(() =>{
                 dispatch({type: actionType.SET_LOADING})
