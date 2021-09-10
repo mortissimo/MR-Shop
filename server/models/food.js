@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Food.belongsToMany(models.User, {through: models.Order, foreignKey:'FoodId'});
-      Food.hasMany(models.Order, {foreignKey:"FoodId"})
+      Food.belongsToMany(models.User, {through: models.Order, foreignKey:'FoodId', onDelete:'cascade', onUpdate:'cascade'});
+      Food.hasMany(models.Order, {foreignKey:"FoodId", onDelete:'cascade', onUpdate:'cascade'})
     }
   };
   Food.init({

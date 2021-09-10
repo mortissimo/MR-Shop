@@ -7,7 +7,6 @@ class TransactionController{
         console.log(id);
         Transaction.findByPk(id)
         .then(data =>{
-            console.log("DADADADA",data);
             if(data){
                 if(data.status === "incomplete"){
                     return Transaction.update({status:"completed"}, {where:{id}})
@@ -27,7 +26,7 @@ class TransactionController{
         const {role} = req.user;
         if(role === 'customer'){
             const {id} = req.user
-            Transaction.findAll({where:{UserId: id}, include:[{model: Order}, {model: User}], order: [['updatedAt', 'DESC']]})
+            Transaction.findAll({where:{UserId: id}, include:[{model: Order}, {model: User}], order: [['createdAt', 'DESC']]})
             .then(data =>{
                 res.status(200).json(data)
             })
@@ -35,7 +34,7 @@ class TransactionController{
                 res.status(500).json(err);
             })
         }else if(role === 'admin'){
-            Transaction.findAll({include:[{model: Order}, {model: User}], order: [['updatedAt', 'DESC']]})
+            Transaction.findAll({include:[{model: Order}, {model: User}], order: [['createdAt', 'DESC']]})
             .then(data =>{
                 res.status(200).json(data)
             })
