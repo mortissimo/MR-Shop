@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 export default function Order(props){
     const {detail, loading, error} = useSelector((state) => state.order)
     return(
-        
         <div className='fixed z-40 top-0 bg-gray-500 bg-opacity-50 h-screen w-screen'>
              <div class='flex justify-center items-center h-full'>
                 <div className='flex flex-col bg-white rounded-md  bg-white p-4 w-7/12'>

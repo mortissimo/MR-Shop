@@ -8,7 +8,7 @@ export default function UserTrasaction() {
     const dispatch = useDispatch()
 
     const [orderModal, setOrderModal] = useState(false)
-    const [transactions, setTransactions] = useState([])
+    const [transactions, setTransactions] = useState('')
     const [transactionDetail, setTransactionDetail] = useState('')
 
     const handleShowOrder = async (e, data) =>{
@@ -24,20 +24,20 @@ export default function UserTrasaction() {
             setOrderModal(true);
         }   
     }
-    const getAllTransaction = () =>{
-        axios({
+    const getAllTransaction = async() =>{
+        await axios({
             method:"GET",
             url:'/transactions',
             headers:{
                 access_token: localStorage.getItem('token')
             }
         })
-        .then(({data}) =>{
+        .then(async ({data}) =>{
             // data.forEach(data =>{
             //     data.createdAt = new Date(data.createdAt).getDay()+"-"+new Date(data.createdAt).getMonth()+"-"+new Date(data.createdAt).getFullYear()+" "+new Date(data.createdAt).getHours()+":"+new Date(data.createdAt).getMinutes()+":"+new Date(data.createdAt).getSeconds()
             //     data.updatedAt = new Date(data.updatedAt).getDay()+"-"+new Date(data.updatedAt).getMonth()+"-"+new Date(data.updatedAt).getFullYear()+" "+new Date(data.updatedAt).getHours()+":"+new Date(data.updatedAt).getMinutes()+":"+new Date(data.updatedAt).getSeconds()
             // })
-            setTransactions(data)
+            await setTransactions(data)
         })
     }
     useEffect(() =>{
